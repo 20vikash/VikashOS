@@ -63,12 +63,15 @@ load32:
     mov eax, 1
     mov ecx, 100
     mov edi, 0x0100000
-    call ata_lba_read
+    call ata_lba_read ; Load kernel into memory
+    ; Now jump into the kernel memory
+    jmp CODE_SEG:0x0100000
 
 ata_lba_read: ; Disk driver (ATA)
     mov ebx, eax
     ; Send the highest 8 bits of the lba to the hard disk controller (ATA)
     shr eax, 24
+    or eax, 0xE0 ; Selects the master drive
     mov dx, 0x1F6
     out dx, al
     ; Finished sending the highest 8 bits of the LBA
@@ -103,7 +106,27 @@ ata_lba_read: ; Disk driver (ATA)
     mov al, 0x20
     out dx, al
 
-    ; Read all sectors into memory
+; Read all sectors into memory
+.next_sector:
+    push ecx
+
+; Checking if we need to read. (ATA controller may have a delay)
+.try_again:
+    mov dx, 0x1F7
+    in al, dx
+    test al, 8 ; Check if the 3rd bit is set to 1 (result in zero flag)
+    jz .try_again
+
+    ; We need to read 256 words at a time.
+    mov ecx, 256
+    mov dx, 0x1F0
+    ; 256 words = 512 bytes of the kernel sector of the disk
+    rep insw ; insw reads a word from the port in dx, and puts it in es:(e)di, rep will repeat it `ecx` times.
+    pop ecx
+    loop .next_sector ; Uses the ecx by default. decrements the ecx value by 1.
+
+    ;End of reading from the sectors
+    ret
 
 times 510 - ($ - $$) db 0
 dw 0xAA55

@@ -11,6 +11,7 @@ _start:
     mov fs, ax
     mov gs, ax
     mov ss, ax
+    ; Stack grows downwards
     mov ebp, 0x00200000
     mov esp, ebp
 
