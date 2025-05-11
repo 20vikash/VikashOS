@@ -122,6 +122,7 @@ ata_lba_read: ; Disk driver (ATA)
     mov dx, 0x1F0
     ; 256 words = 512 bytes of the kernel sector of the disk
     rep insw ; insw reads a word from the port in dx, and puts it in es:(e)di, rep will repeat it `ecx` times.
+    ; insw will increment edi by 1 word
     pop ecx
     loop .next_sector ; Uses the ecx by default. decrements the ecx value by 1.
 
