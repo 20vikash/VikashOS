@@ -29,9 +29,7 @@ step2:
     mov eax, cr0
     or eax, 0x1
     mov cr0, eax
-    ; jmp CODE_SEG:load32
-
-    jmp $
+    jmp CODE_SEG:load32
 
 gdt_start:
 gdt_null:
@@ -59,6 +57,53 @@ gdt_end:
 gdt_descriptor:
     dw gdt_end - gdt_start - 1
     dd gdt_start
+
+[BITS 32]
+load32:
+    mov eax, 1
+    mov ecx, 100
+    mov edi, 0x0100000
+    call ata_lba_read
+
+ata_lba_read: ; Disk driver (ATA)
+    mov ebx, eax
+    ; Send the highest 8 bits of the lba to the hard disk controller (ATA)
+    shr eax, 24
+    mov dx, 0x1F6
+    out dx, al
+    ; Finished sending the highest 8 bits of the LBA
+
+    ;Sending the number of sectors
+    mov eax, ecx
+    mov dx, 0x1F2
+    out dx, al
+    ; Finished sending the total sectors to read
+
+    ; Send more bits of the LBA
+    mov eax, ebx ; Restore the LBA
+    mov dx, 0x1F3
+    out dx, al
+    ; Finished sending more bits of the LBA
+
+    ; Send more bits of the LBA
+    mov dx, 0x1F4
+    mov eax, ebx ; Restore the LBA
+    shr eax, 8
+    out dx, al
+    ; Finished sending more bits of the LBA
+
+    ; Send upper 16 bits of the LBA
+    mov dx, 0x1F5
+    mov eax, ebx ; Restore the LBA
+    shr eax, 16
+    out dx, al
+    ; Finished sending upper 16 bits of the LBA
+
+    mov dx, 0x1F7
+    mov al, 0x20
+    out dx, al
+
+    ; Read all sectors into memory
 
 times 510 - ($ - $$) db 0
 dw 0xAA55
