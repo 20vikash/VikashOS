@@ -22,7 +22,6 @@ step2:
     mov sp, 0x7c00
     sti
 
-    jmp $
 .load_protected:
     cli
     lgdt[gdt_descriptor]
