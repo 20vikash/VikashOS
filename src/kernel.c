@@ -6,4 +6,6 @@ void kernel_main()
 
     video_memory[0] = 'A';
     video_memory[1] = 2;
+    video_memory[2] = 'C';
+    video_memory[3] = 2;
 }
