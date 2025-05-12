@@ -1,4 +1,6 @@
 #include "kernel.h"
+#include <stdint.h>
+#include <stddef.h>
 
 uint16_t* video_memory = 0;
 
@@ -16,8 +18,18 @@ void initialize_terminal() {
     }
 }
 
+size_t strlen(const char *str) {
+    size_t len = 0;
+
+    while(str[len]) {
+        len++;
+    }
+
+    return len;
+}
+
 void kernel_main() 
 {
     initialize_terminal();
-    video_memory[0] = terminal_make_char('b', 3);
+    video_memory[0] = terminal_make_char('b', 15);
 }
