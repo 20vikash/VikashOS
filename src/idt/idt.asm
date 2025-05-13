@@ -6,7 +6,7 @@ idt_load:
     push ebp
     mov ebp, esp
 
-    mov ebx, [epb+8]
+    mov ebx, [ebp+8]
     lidt [ebx]
 
     pop ebp
