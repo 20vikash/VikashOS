@@ -5,5 +5,6 @@
 #define VGA_HEIGHT 20
 
 void kernel_main();
+void printf(char *c);
 
 #endif
