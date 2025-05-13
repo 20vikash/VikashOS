@@ -24,7 +24,7 @@ all: ./bin/boot.bin ./bin/kernel.bin
 ./build/idt/idt.asm.o: ./src/idt/idt.asm
 	nasm -f elf -g ./src/idt/idt.asm -o ./build/idt/idt.asm.o
 
-./build/idt/idt.o: ./src/idt.c
+./build/idt/idt.o: ./src/idt/idt.c
 	i686-elf-gcc $(INCLUDES) $(FLAGS) -std=gnu99 -c ./src/idt/idt.c -o ./build/idt/idt.o
 
 ./build/memory/memory.o: ./src/memory/memory.c
