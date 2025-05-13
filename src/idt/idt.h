@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 
+void idt_init();
+void idt_set(int interrupt_no, void *address);
+
 struct idt_desc
 {
     uint16_t offset_1; // Offset bits 0-15

@@ -1,10 +1,13 @@
 #include "kernel.h"
 #include <stdint.h>
 #include <stddef.h>
+#include "idt/idt.h"
 
 uint16_t* video_memory = 0;
 uint16_t terminal_row = 0;
 uint16_t terminal_column = 0;
+
+extern void problem();
 
 uint16_t terminal_make_char(char c, char color) {
     return (color << 8) | c; // The first byte is the ascii, 2nd byte is the color. (little endian)
@@ -64,5 +67,7 @@ void initialize_terminal() {
 void kernel_main() 
 {
     initialize_terminal();
-    printf("Hello world. \nMy name is Vikash");
+
+    idt_init();
+    problem();
 }

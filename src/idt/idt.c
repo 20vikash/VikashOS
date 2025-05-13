@@ -10,6 +10,7 @@ extern void idt_load(struct idtr_desc *ptr);
 
 void idt_zero() {
     printf("Divide by zero error");
+    while(1);
 }
 
 void idt_set(int interrupt_no, void *address) {
