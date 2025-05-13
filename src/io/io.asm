@@ -12,3 +12,14 @@ insb: ; Read one byte from the dx port.
 
     pop ebp
     ret
+
+insw:
+    push ebp
+    mov ebp, esp
+
+    xor eax, eax
+    mov edx, [ebp+8]
+    in ax, dx
+
+    pop ebp
+    ret
