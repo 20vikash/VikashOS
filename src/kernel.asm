@@ -34,6 +34,9 @@ _start:
 
     ; End remap of master PIC
 
+    ; Enable interrupts
+    sti
+
     call kernel_main
     jmp $
 
