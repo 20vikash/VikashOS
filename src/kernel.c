@@ -65,8 +65,6 @@ void initialize_terminal() {
 
 void kernel_main() 
 {
-    char *a = (char *)(0x0100201); // Trigger kernel panic (For fun)
-    *a = 'A';
     initialize_terminal();
 
     idt_init();
