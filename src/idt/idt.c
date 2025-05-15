@@ -17,7 +17,7 @@ void int21h_handler() {
 }
 
 void no_interrupt_handler() {
-    outb(0x20, 0x20);
+    outb(0x20, 0x20); // Ack the PIC
 }
 
 void idt_zero() {
