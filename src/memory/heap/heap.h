@@ -20,4 +20,12 @@ struct heap_table
     size_t total;
 };
 
+struct heap
+{
+    struct heap_table* table;
+    void* saddr; // Start address of the data pool.
+};
+
+int heap_create(struct heap* heap, void* ptr, void* end, struct heap_table* table);
+
 #endif
