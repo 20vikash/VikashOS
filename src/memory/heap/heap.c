@@ -1,6 +1,7 @@
 #include "heap.h"
 #include "kernel.h"
 #include "status.h"
+#include "memory/memory.h"
 #include <stdbool.h>
 
 static bool heap_validate_alignment(void* ptr) {
@@ -14,6 +15,10 @@ int heap_create(struct heap* heap, void* ptr, void* end, struct heap_table* tabl
         res = -EINVARG;
         goto out;
     }
+
+    memset(heap, 0, sizeof(struct heap));
+    heap->saddr = ptr;
+    heap->table = table;
 
 out:
     return res;
