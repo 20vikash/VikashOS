@@ -48,6 +48,17 @@ out:
     return res;
 }
 
+static uint32_t heap_align_value_to_upper(uint32_t val) {
+    if (val % VIKASHOS_HEAP_BLOCK_SIZE == 0) {
+        return val;
+    }
+
+    val = (val - (val % VIKASHOS_HEAP_BLOCK_SIZE));
+    val += VIKASHOS_HEAP_BLOCK_SIZE;
+
+    return val;
+}
+
 void* heap_malloc(size_t size) {
     return 0;
 }
