@@ -1,5 +1,6 @@
 #include "heap.h"
 #include "kernel.h"
+#include "status.h"
 #include <stdbool.h>
 
 static bool heap_validate_alignment(void* ptr) {
