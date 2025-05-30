@@ -1,8 +1,24 @@
 #include "heap.h"
 #include "kernel.h"
 #include "status.h"
+#include "config.h"
 #include "memory/memory.h"
 #include <stdbool.h>
+
+static int heap_validate_table(void* ptr, void* end, struct heap_table* table) {
+    int res = 0;
+
+    size_t table_size = (size_t)(end - ptr);
+    size_t total_blocks = table_size / VIKASHOS_HEAP_BLOCK_SIZE;
+    
+    if (table->total != total_blocks) {
+        res = -EINVARG;
+        goto out;
+    }
+
+out:
+    return res;
+}
 
 static bool heap_validate_alignment(void* ptr) {
     return ((unsigned int)ptr % VIKASHOS_HEAP_BLOCK_SIZE) == 0;
