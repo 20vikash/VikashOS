@@ -14,4 +14,10 @@
 
 typedef unsigned char HEAP_BLOCK_TABLE_ENTRY; // 8 bits (1 entry)
 
+struct heap_table
+{
+    HEAP_BLOCK_TABLE_ENTRY* entries; // Entry table will be stored in an unallocated memory area to reduce the size of the kernel binary
+    size_t total;
+};
+
 #endif
