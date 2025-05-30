@@ -3,5 +3,6 @@
 
 #define VIKASHOS_ALL_OK 0
 #define EIO 1 // IO error
+#define EINVARG 2 // Invalid argument
 
 #endif
