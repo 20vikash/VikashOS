@@ -47,3 +47,11 @@ int heap_create(struct heap* heap, void* ptr, void* end, struct heap_table* tabl
 out:
     return res;
 }
+
+void* heap_malloc(size_t size) {
+    return 0;
+}
+
+void heap_free(void* ptr) {
+    return 0;
+}
