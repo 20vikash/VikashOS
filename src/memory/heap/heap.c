@@ -59,10 +59,17 @@ static uint32_t heap_align_value_to_upper(uint32_t val) {
     return val;
 }
 
-void* heap_malloc(size_t size) {
-    return 0;
+void* heap_malloc_blocks(struct heap* heap, uint32_t total_blocks) {
+
 }
 
-void heap_free(void* ptr) {
+void* heap_malloc(struct heap* heap, size_t size) {
+    size_t aligned_size = heap_align_value_to_upper(size);
+    uint32_t total_blocks = aligned_size / VIKASHOS_HEAP_BLOCK_SIZE;
+
+    return heap_malloc_blocks(heap, total_blocks);
+}
+
+void heap_free(struct heap* heap, void* ptr) {
     return 0;
 }
