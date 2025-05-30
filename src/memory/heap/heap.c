@@ -36,6 +36,14 @@ int heap_create(struct heap* heap, void* ptr, void* end, struct heap_table* tabl
     heap->saddr = ptr;
     heap->table = table;
 
+    res = heap_validate_table(ptr, end, table);
+    if (res < 0) {
+        goto out;
+    }
+
+    size_t table_size = sizeof(HEAP_BLOCK_TABLE_ENTRY) * table->total;
+    memset(table->entries, HEAP_BLOCK_TABLE_ENTRY_FREE, table_size);
+
 out:
     return res;
 }
