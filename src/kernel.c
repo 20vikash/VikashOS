@@ -71,8 +71,9 @@ void kernel_main()
     idt_init();
 
     void* ptr1 = kmalloc(50);
-    // void* ptr2 = kmalloc(5000);
+    void* ptr2 = kmalloc(5000);
 
-    printf(ptr1);
-    printf("Hello world");
+    if (ptr1 || ptr2) {
+        
+    }
 }
