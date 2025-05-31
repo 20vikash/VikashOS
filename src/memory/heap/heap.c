@@ -59,8 +59,25 @@ static uint32_t heap_align_value_to_upper(uint32_t val) {
     return val;
 }
 
-void* heap_malloc_blocks(struct heap* heap, uint32_t total_blocks) {
+int heap_get_start_block(struct heap* heap, uint32_t total_blocks) {
+    struct heap_table* table = heap->table;
+}
 
+void* heap_malloc_blocks(struct heap* heap, uint32_t total_blocks) {
+    void* address = 0;
+
+    int start_block = heap_get_start_block(heap, total_blocks);
+    if (start_block < 0) {
+        goto out;
+    }
+
+    address = heap_block_to_address(heap, start_block);
+
+    // Mark blocks as taken
+    heap_mark_blocks_taken(heap, start_block, total_blocks);
+
+out:
+    return address;
 }
 
 void* heap_malloc(struct heap* heap, size_t size) {
