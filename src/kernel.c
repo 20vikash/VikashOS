@@ -69,6 +69,7 @@ void kernel_main()
     initialize_terminal();
     kheap_init();
     idt_init();
+    enable_interrupts();
 
     void* ptr1 = kmalloc(50);
     void* ptr2 = kmalloc(5000);

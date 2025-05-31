@@ -5,6 +5,8 @@
 
 void idt_init();
 void idt_set(int interrupt_no, void *address);
+void enable_interrupts();
+void disable_interrupts();
 
 struct idt_desc
 {
