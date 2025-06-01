@@ -1,5 +1,6 @@
 #include "paging.h"
 #include "memory/heap/kheap.h"
+#include <status.h>
 
 void paging_load_directory(uint32_t* directory);
 
@@ -31,4 +32,22 @@ void paging_switch(uint32_t* directory) {
 
 uint32_t* paging_4gb_chunk_get_directory(struct paging_4gb_chunk* chunk_4gb) {
     return chunk_4gb->directory_entry;
+}
+
+bool paging_is_aligned(void* addr) {
+    return ((uint32_t)addr % PAGING_TOTAL_ENTRIES_PER_TABLE) == 0;
+}
+
+int paging_get_indexes(void* virtual_address, uint32_t* directory_index_out, uint32_t* table_index_out) {
+    int res = 0;
+
+    if (!paging_is_aligned(virtual_address)) {
+        res = -EINVARG;
+        goto out;
+    }
+
+    *directory_index_out = ((uint32_t)virtual_address / (PAGING_TOTAL_ENTRIES_PER_TABLE * PAGING_PAGE_SIZE));
+    *table_index_out = ((uint32_t)virtual_address % (PAGING_TOTAL_ENTRIES_PER_TABLE * PAGING_PAGE_SIZE) / PAGING_PAGE_SIZE);
+out:
+    return res;
 }
