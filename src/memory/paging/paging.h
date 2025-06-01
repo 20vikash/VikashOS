@@ -17,4 +17,7 @@ struct paging_4gb_chunk {
     uint32_t* directory_entry;
 };
 
+void paging_switch(uint32_t* directory);
+struct paging_4gb_chunk* paging_new_4gb(uint8_t flags);
+
 #endif
