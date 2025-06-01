@@ -66,6 +66,8 @@ int paging_set(uint32_t* directory, void* virt, uint32_t val) {
     }
 
     uint32_t entry = directory[directory_index];
-    uint32_t* table = (uint32_t*)(entry & 0xfffff0000); // High 20 bits are the actual page table address
+    uint32_t* table = (uint32_t*)(entry & 0xfffff000); // High 20 bits are the actual page table address
     table[table_index] = val; // Val is the physical address with all the flags.
+
+    return 0;
 }
