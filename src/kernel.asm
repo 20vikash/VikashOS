@@ -1,7 +1,5 @@
 [BITS 32]
 global _start ; Exports this symbol to other files
-global problem
-
 extern kernel_main ; Imports the symbol from other files
 
 CODE_SEG equ 0x08
