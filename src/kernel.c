@@ -65,22 +65,22 @@ void initialize_terminal() {
     }
 }
 
+static struct paging_4gb_chunk* kernel_chunk = 0;
+
 void kernel_main() 
 {
     initialize_terminal();
     kheap_init();
     idt_init();
+
+    printf("Hello world\n");
+
+    // Set up paging
+    kernel_chunk = paging_new_4gb(PAGING_ACCESS_FROM_ALL | PAGING_IS_WRITABLE | PAGING_IS_PRESENT);
+    // Switch to kernel paging chunk
+    paging_switch(paging_4gb_chunk_get_directory(kernel_chunk));
+    // Enable paging
+    enable_paging();
+
     enable_interrupts();
-
-    void* ptr1 = kmalloc(50);
-    void* ptr2 = kmalloc(5000);
-    void* ptr3 = kmalloc(5600);
-    
-    kfree(ptr1);
-
-    void* ptr4 = kmalloc(50);
-
-    if (ptr1 || ptr2 || ptr3 || ptr4) {
-        
-    }
 }
