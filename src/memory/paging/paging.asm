@@ -20,7 +20,7 @@ enable_paging:
     mov ebp, esp
 
     mov eax, cr0
-    mov eax, 0x80000000 ; Apply the 31st bit to enable paging
+    or eax, 0x80000000 ; Apply the 31st bit to enable paging
     mov cr0, eax
 
     pop ebp
