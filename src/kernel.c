@@ -72,6 +72,7 @@ void kernel_main()
 {
     initialize_terminal();
     kheap_init();
+    disk_search_and_init();
     idt_init();
 
     printf("Hello world\n");
@@ -83,9 +84,6 @@ void kernel_main()
 
     // Enable paging
     enable_paging();
-
-    char buf[512];
-    read_disk_sector(3, 1, buf);
 
     enable_interrupts();
 }
