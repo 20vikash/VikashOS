@@ -8,5 +8,19 @@ int read_disk_sector(int lba, int total, void* buf) {
     outb(0x1F5, (unsigned char)(lba >> 16));
     outb(0x1F7, 0x20);
 
+    unsigned short* ptr = (unsigned short*) buf;
+    for (int b = 0; b < total; b++) {
+        // Wait for the buffer to be ready.
+        char c = insb(0x1F7);
+        while(!(c & 0x08)) {
+            c = insb(0x1F7);
+        }
+
+        for (int i = 0; i < 256; i++) {
+            *ptr = insw(0x1F0);
+            ptr++;
+        }
+    }
+
     return 0;
 }
